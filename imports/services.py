@@ -122,7 +122,7 @@ def _init_reconcile_cache(batch):
     return {"fingerprints": fps, "contexts": contexts}
 
 
-def _reconcile(row, *, used=None, cache=None):
+def _reconcile(row, *, used=None, cache=None, pending_matches=None):
     """Exact attributes are evidence, never a globally unique transaction identity."""
     batch, data = row.batch, row.normalized
     used = used if used is not None else set()
@@ -135,17 +135,29 @@ def _reconcile(row, *, used=None, cache=None):
             .order_by("created_at", "pk")
         )
         for candidate in candidates:
-            DuplicateMatch.objects.get_or_create(
-                row=row,
-                candidate=candidate,
-                defaults={
-                    "evidence": {
-                        "exact_fingerprint": True,
-                        "soft_deleted": bool(candidate.soft_deleted_at),
+            evidence = {
+                "exact_fingerprint": True,
+                "soft_deleted": bool(candidate.soft_deleted_at),
+            }
+            reason = "Atribut sama; identitas kejadian sumber tidak tersedia."
+            if pending_matches is not None:
+                pending_matches.append(
+                    DuplicateMatch(
+                        row=row,
+                        candidate=candidate,
+                        evidence=evidence,
+                        reason=reason,
+                    )
+                )
+            else:
+                DuplicateMatch.objects.get_or_create(
+                    row=row,
+                    candidate=candidate,
+                    defaults={
+                        "evidence": evidence,
+                        "reason": reason,
                     },
-                    "reason": "Atribut sama; identitas kejadian sumber tidak tersedia.",
-                },
-            )
+                )
     if candidates:
         if batch.full_snapshot_confirmed and _inside(data, batch.scope):
             provenance = [
@@ -189,14 +201,26 @@ def _reconcile(row, *, used=None, cache=None):
         nearby = nearby[:50]
         for candidate in nearby:
             has_nearby = True
-            DuplicateMatch.objects.get_or_create(
-                row=row,
-                candidate=candidate,
-                defaults={
-                    "evidence": {"same_date_bank_region_account": True},
-                    "reason": "Konteks sama dengan atribut berbeda; pilih UUID bila merupakan revisi.",
-                },
-            )
+            evidence = {"same_date_bank_region_account": True}
+            reason = "Konteks sama dengan atribut berbeda; pilih UUID bila merupakan revisi."
+            if pending_matches is not None:
+                pending_matches.append(
+                    DuplicateMatch(
+                        row=row,
+                        candidate=candidate,
+                        evidence=evidence,
+                        reason=reason,
+                    )
+                )
+            else:
+                DuplicateMatch.objects.get_or_create(
+                    row=row,
+                    candidate=candidate,
+                    defaults={
+                        "evidence": evidence,
+                        "reason": reason,
+                    },
+                )
     return "NEEDS_REVIEW" if has_nearby or batch.mode == "UPDATE" else "NEW_VALID"
 
 
@@ -255,6 +279,8 @@ def stage_import(
             denominations_by_code = {d.code: d for d in Denomination.objects.all()}
             regions_by_code = {r.code: r for r in ServiceRegion.objects.all()}
             reconcile_cache = _init_reconcile_cache(batch)
+            rows_to_create = []
+            duplicate_matches = []
             for item in parsed.rows:
                 status, errors = item.status, list(item.issues)
                 if scope and not _inside(item.normalized, scope):
@@ -320,7 +346,8 @@ def stage_import(
                             "message": "Nama wilayah berbeda dari master; periksa mapping wilayah.",
                         }
                     )
-                row = ImportRow.objects.create(
+                row = ImportRow(
+                    id=uuid.uuid4(),
                     batch=batch,
                     sheet_name=item.sheet,
                     source_row_number=item.row_number,
@@ -331,7 +358,9 @@ def stage_import(
                     validation_errors=errors,
                 )
                 if status == "NEW_VALID":
-                    row.status = _reconcile(row, used=used, cache=reconcile_cache)
+                    row.status = _reconcile(
+                        row, used=used, cache=reconcile_cache, pending_matches=duplicate_matches
+                    )
                     if row.status == "NEW_VALID" and seen[row.fingerprint]:
                         row.status = "NEEDS_REVIEW"
                         row.validation_errors.append(
@@ -341,7 +370,10 @@ def stage_import(
                             }
                         )
                     seen[row.fingerprint] += 1
-                    row.save(update_fields=["status", "linked_transaction", "validation_errors"])
+                rows_to_create.append(row)
+            ImportRow.objects.bulk_create(rows_to_create, batch_size=1000)
+            if duplicate_matches:
+                DuplicateMatch.objects.bulk_create(duplicate_matches, batch_size=1000, ignore_conflicts=True)
             _stats(batch)
             audit(
                 actor,
@@ -853,6 +885,7 @@ def smart_import(actor, uploaded_file, **options):
     batch = stage_import(actor, uploaded_file, **options)
     if batch.mode != "REPLACE":
         # Otomatisasi: baris yang hanya memiliki isu presisi rekening langsung disahkan sebagai NEW_VALID
+        updated_rows = []
         for row in batch.rows.filter(status="NEEDS_REVIEW"):
             codes = {e.get("code") for e in row.validation_errors}
             if codes <= {"numeric_account", "numeric_account_precision"}:
@@ -862,7 +895,13 @@ def smart_import(actor, uploaded_file, **options):
                 row.fingerprint = fingerprint(row.normalized)
                 row.validation_errors = []
                 row.status = "NEW_VALID"
-                row.save(update_fields=["status", "normalized", "fingerprint", "validation_errors"])
+                updated_rows.append(row)
+        if updated_rows:
+            ImportRow.objects.bulk_update(
+                updated_rows,
+                ["status", "normalized", "fingerprint", "validation_errors"],
+                batch_size=1000,
+            )
         if batch.rows.filter(status="NEW_VALID").exists():
             batch = commit_batch(actor, batch.pk)
     return batch
