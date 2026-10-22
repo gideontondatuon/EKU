@@ -103,28 +103,49 @@ def _source_candidates(batch, data):
     return CashflowTransaction.objects.filter(dataset=batch.dataset, is_demo=batch.is_demo)
 
 
-def _reconcile(row, *, used=None):
+def _init_reconcile_cache(batch):
+    base_qs = _source_candidates(batch, {})
+    if not base_qs.exists():
+        return {"fingerprints": set(), "contexts": set()}
+    fps = set(base_qs.values_list("fingerprint", flat=True))
+    contexts = {
+        (
+            str(d) if d else "",
+            str(r) if r else "",
+            (b or "").casefold(),
+            str(m) if m else "",
+        )
+        for d, r, b, m in base_qs.values_list(
+            "transaction_date", "region__code", "bank__name", "money_type"
+        )
+    }
+    return {"fingerprints": fps, "contexts": contexts}
+
+
+def _reconcile(row, *, used=None, cache=None):
     """Exact attributes are evidence, never a globally unique transaction identity."""
     batch, data = row.batch, row.normalized
     used = used if used is not None else set()
-    candidates = list(
-        _source_candidates(batch, data)
-        .filter(fingerprint=row.fingerprint)
-        .select_related("source_row__batch")
-        .order_by("created_at", "pk")
-    )
-    for candidate in candidates:
-        DuplicateMatch.objects.get_or_create(
-            row=row,
-            candidate=candidate,
-            defaults={
-                "evidence": {
-                    "exact_fingerprint": True,
-                    "soft_deleted": bool(candidate.soft_deleted_at),
-                },
-                "reason": "Atribut sama; identitas kejadian sumber tidak tersedia.",
-            },
+    candidates = []
+    if cache is None or row.fingerprint in cache.get("fingerprints", set()):
+        candidates = list(
+            _source_candidates(batch, data)
+            .filter(fingerprint=row.fingerprint)
+            .select_related("source_row__batch")
+            .order_by("created_at", "pk")
         )
+        for candidate in candidates:
+            DuplicateMatch.objects.get_or_create(
+                row=row,
+                candidate=candidate,
+                defaults={
+                    "evidence": {
+                        "exact_fingerprint": True,
+                        "soft_deleted": bool(candidate.soft_deleted_at),
+                    },
+                    "reason": "Atribut sama; identitas kejadian sumber tidak tersedia.",
+                },
+            )
     if candidates:
         if batch.full_snapshot_confirmed and _inside(data, batch.scope):
             provenance = [
@@ -142,33 +163,40 @@ def _reconcile(row, *, used=None):
                 return "ALREADY_IMPORTED"
         return "NEEDS_REVIEW"
     # A changed amount/denomination on the same business context needs an explicit selected UUID.
-    nearby = (
-        _source_candidates(batch, data)
-        .exclude(source_row__batch=batch)
-        .filter(
-            transaction_date=data.get("transaction_date"),
-            region__code=data.get("region_code"),
-            bank__name__iexact=data.get("bank_name", ""),
-            money_type=data.get("money_type", ""),
-        )
-    )
-    if not any(w.get("code") == "numeric_account" for w in data.get("warnings", [])):
-        nearby = nearby.filter(
-            Q(account=data.get("account", ""))
-            | Q(source_row__normalized__warnings__contains=[{"code": "numeric_account"}])
-        )
-    nearby = nearby[:50]
     has_nearby = False
-    for candidate in nearby:
-        has_nearby = True
-        DuplicateMatch.objects.get_or_create(
-            row=row,
-            candidate=candidate,
-            defaults={
-                "evidence": {"same_date_bank_region_account": True},
-                "reason": "Konteks sama dengan atribut berbeda; pilih UUID bila merupakan revisi.",
-            },
+    context_key = (
+        str(data.get("transaction_date") or ""),
+        str(data.get("region_code") or ""),
+        (data.get("bank_name") or "").casefold(),
+        str(data.get("money_type") or ""),
+    )
+    if cache is None or context_key in cache.get("contexts", set()):
+        nearby = (
+            _source_candidates(batch, data)
+            .exclude(source_row__batch=batch)
+            .filter(
+                transaction_date=data.get("transaction_date"),
+                region__code=data.get("region_code"),
+                bank__name__iexact=data.get("bank_name", ""),
+                money_type=data.get("money_type", ""),
+            )
         )
+        if not any(w.get("code") == "numeric_account" for w in data.get("warnings", [])):
+            nearby = nearby.filter(
+                Q(account=data.get("account", ""))
+                | Q(source_row__normalized__warnings__contains=[{"code": "numeric_account"}])
+            )
+        nearby = nearby[:50]
+        for candidate in nearby:
+            has_nearby = True
+            DuplicateMatch.objects.get_or_create(
+                row=row,
+                candidate=candidate,
+                defaults={
+                    "evidence": {"same_date_bank_region_account": True},
+                    "reason": "Konteks sama dengan atribut berbeda; pilih UUID bila merupakan revisi.",
+                },
+            )
     return "NEEDS_REVIEW" if has_nearby or batch.mode == "UPDATE" else "NEW_VALID"
 
 
@@ -226,6 +254,7 @@ def stage_import(
             used, seen = set(), Counter()
             denominations_by_code = {d.code: d for d in Denomination.objects.all()}
             regions_by_code = {r.code: r for r in ServiceRegion.objects.all()}
+            reconcile_cache = _init_reconcile_cache(batch)
             for item in parsed.rows:
                 status, errors = item.status, list(item.issues)
                 if scope and not _inside(item.normalized, scope):
@@ -302,7 +331,7 @@ def stage_import(
                     validation_errors=errors,
                 )
                 if status == "NEW_VALID":
-                    row.status = _reconcile(row, used=used)
+                    row.status = _reconcile(row, used=used, cache=reconcile_cache)
                     if row.status == "NEW_VALID" and seen[row.fingerprint]:
                         row.status = "NEEDS_REVIEW"
                         row.validation_errors.append(
@@ -327,11 +356,19 @@ def stage_import(
         raise
 
 
-def _create_or_update(actor, row, target=None, reason="Import baris tervalidasi"):
+def _create_or_update(actor, row, target=None, reason="Import baris tervalidasi", caches=None):
     data = row.normalized
-    denomination = Denomination.objects.filter(
-        code=data["denomination_code"], verified=True
-    ).first()
+    caches = caches or {}
+    denominations = caches.get("denominations")
+    if denominations is not None and data["denomination_code"] in denominations:
+        denomination = denominations[data["denomination_code"]]
+    else:
+        denomination = Denomination.objects.filter(
+            code=data["denomination_code"], verified=True
+        ).first()
+        if denominations is not None and denomination:
+            denominations[denomination.code] = denomination
+
     if not _master_eligible(denomination, row.batch.is_demo) or denomination.value != Decimal(
         data["denomination_value"]
     ):
@@ -341,16 +378,32 @@ def _create_or_update(actor, row, target=None, reason="Import baris tervalidasi"
         data.get("bank_code")
         or "SRC-" + hashlib.sha256(data["bank_name"].casefold().encode()).hexdigest()[:20]
     )
-    bank, _ = Bank.objects.get_or_create(code=bank_code, defaults={"name": data["bank_name"]})
+    banks = caches.get("banks")
+    if banks is not None and bank_code in banks:
+        bank = banks[bank_code]
+    else:
+        bank, _ = Bank.objects.get_or_create(code=bank_code, defaults={"name": data["bank_name"]})
+        if banks is not None:
+            banks[bank.code] = bank
+
     if bank.name.casefold() != data["bank_name"].casefold():
         raise ValidationError("Kode bank dan nama berbeda dari master.")
-    region, _ = ServiceRegion.objects.get_or_create(
-        code=data["region_code"],
-        defaults={
-            "name": data["region_name"],
-            "kind": data["region_kind"],
-        },
-    )
+
+    regions = caches.get("regions")
+    region_code = data["region_code"]
+    if regions is not None and region_code in regions:
+        region = regions[region_code]
+    else:
+        region, _ = ServiceRegion.objects.get_or_create(
+            code=region_code,
+            defaults={
+                "name": data["region_name"],
+                "kind": data["region_kind"],
+            },
+        )
+        if regions is not None:
+            regions[region.code] = region
+
     if region.name != data["region_name"] or region.kind != data["region_kind"]:
         raise ValidationError(
             "Wilayah berbeda dari master; koreksi/verifikasi mapping terlebih dahulu."
@@ -413,10 +466,25 @@ def commit_batch(actor, batch_id):
     if batch.mode == "REPLACE":
         raise ValidationError("Gunakan pratinjau dan konfirmasi penggantian periode.")
     count, used = 0, set()
+    caches = {
+        "denominations": {d.code: d for d in Denomination.objects.filter(verified=True)},
+        "banks": {b.code: b for b in Bank.objects.all()},
+        "regions": {r.code: r for r in ServiceRegion.objects.all()},
+    }
+    reconcile_cache = _init_reconcile_cache(batch)
     for row in batch.rows.select_for_update().filter(status="NEW_VALID"):
-        row.status = _reconcile(row, used=used)
+        row.status = _reconcile(row, used=used, cache=reconcile_cache)
         if row.status == "NEW_VALID":
-            _create_or_update(actor, row)
+            tx = _create_or_update(actor, row, caches=caches)
+            reconcile_cache["fingerprints"].add(tx.fingerprint)
+            reconcile_cache["contexts"].add(
+                (
+                    str(tx.transaction_date or ""),
+                    str(tx.region.code or ""),
+                    tx.bank.name.casefold(),
+                    str(tx.money_type or ""),
+                )
+            )
             count += 1
         else:
             row.save(update_fields=["status", "linked_transaction"])
@@ -703,12 +771,18 @@ def commit_replace(actor, batch_id, confirmation_token, reason):
         },
         reason=reason,
     )
+    caches = {
+        "denominations": {d.code: d for d in Denomination.objects.filter(verified=True)},
+        "banks": {b.code: b for b in Bank.objects.all()},
+        "regions": {r.code: r for r in ServiceRegion.objects.all()},
+    }
     for row in batch.rows.select_for_update().filter(status__in=["NEW_VALID", "READY_UPDATE"]):
         _create_or_update(
             actor,
             row,
             target=row.linked_transaction if row.status == "READY_UPDATE" else None,
             reason=reason,
+            caches=caches,
         )
     for tx in CashflowTransaction.objects.select_for_update().filter(pk__in=plan["deactivate"]):
         before = transaction_snapshot(tx)
