@@ -1,0 +1,6 @@
+line-length = 100
+target-version = "py312"
+exclude = [".runtime", ".tools", ".cache", "static", "references"]
+
+[lint]
+select = ["E4", "E7", "E9", "F", "I"]
