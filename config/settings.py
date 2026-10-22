@@ -137,18 +137,28 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STORAGES = {
-    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
-}
 if os.getenv("VERCEL"):
     PRIVATE_ROOT = Path(os.getenv("PRIVATE_ROOT", "/tmp/.private"))
     FILE_UPLOAD_PERMISSIONS = None
     FILE_UPLOAD_DIRECTORY_PERMISSIONS = None
+    FILE_UPLOAD_TEMP_DIR = "/tmp"
 else:
     PRIVATE_ROOT = Path(os.getenv("PRIVATE_ROOT", str(BASE_DIR / ".private")))
     FILE_UPLOAD_PERMISSIONS = 0o600
     FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o700
+
+MEDIA_ROOT = PRIVATE_ROOT / "uploads"
+MEDIA_URL = "/media/"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {
+            "location": str(MEDIA_ROOT),
+        },
+    },
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
+}
 FILE_UPLOAD_MAX_MEMORY_SIZE = 2 * 1024 * 1024
 DATA_UPLOAD_MAX_MEMORY_SIZE = 12 * 1024 * 1024
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024
