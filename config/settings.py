@@ -80,11 +80,17 @@ TEMPLATES = [
         },
     }
 ]
-raw_db_url = os.getenv("DATABASE_URL") or os.getenv("POSTGRES_URL")
+raw_db_url = (
+    os.getenv("DATABASE_URL")
+    or os.getenv("POSTGRES_URL")
+    or os.getenv("STORAGE_URL")
+    or os.getenv("POSTGRES_PRISMA_URL")
+    or os.getenv("STORAGE_PRISMA_URL")
+)
 if not raw_db_url:
     if os.getenv("VERCEL"):
         raise ImproperlyConfigured(
-            "Variabel DATABASE_URL atau POSTGRES_URL belum diatur di Vercel Environment Variables."
+            "Variabel database (DATABASE_URL / POSTGRES_URL / STORAGE_URL) belum terpasang di Vercel."
         )
     raw_db_url = "postgresql://eku@127.0.0.1:55432/eku"
 
