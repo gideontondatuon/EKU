@@ -26,7 +26,7 @@
         <input type="hidden" name="mode" value="ADD">
         <input type="hidden" name="is_demo" value="">
 
-        <div class="file-upload-dropzone" id="dropzone" style="cursor: pointer; position: relative;">
+        <label for="id_file" class="file-upload-dropzone" id="dropzone" style="display: block; cursor: pointer; position: relative;">
             <div class="upload-icon">
                 <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#1054ab" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -35,19 +35,19 @@
                 </svg>
             </div>
             <div style="margin-top: 8px;">
-                <button type="button" class="btn" id="browse-btn" style="background: #1976e9; color: #fff; font-weight: 600; font-size: 14px; padding: 8px 20px; border-radius: 8px; margin-bottom: 8px; border: none; cursor: pointer;">
+                <span class="btn" id="browse-btn" style="background: #1976e9; color: #fff; font-weight: 600; font-size: 14px; padding: 10px 24px; border-radius: 8px; margin-bottom: 8px; display: inline-block; cursor: pointer;">
                     📁 Pilih File Excel (.xlsx)
-                </button>
-                <div class="muted small">atau seret dan lepas file .xlsx ke dalam area ini</div>
+                </span>
+                <div class="muted small">atau klik di sini / seret dan lepas file .xlsx ke dalam area ini</div>
             </div>
             <input id="id_file" type="file" name="file" accept=".xlsx" style="position: absolute; opacity: 0; width: 0.1px; height: 0.1px; overflow: hidden; z-index: -1;">
             <div id="file-chosen-box" class="file-chosen-badge" style="display: none; margin-top: 14px; background: #e8f5e9; border: 1px solid #81c784; color: #2e7d32; padding: 10px 18px; border-radius: 8px; align-items: center; justify-content: center;">
                 <span style="font-size: 18px; margin-right: 8px;">✅</span>
                 <strong id="file-name-text" style="font-size: 14px;">Nama file</strong>
                 <span id="file-size-text" style="color: #388e3c; font-weight: 500; font-size: 12px; margin-left: 8px;"></span>
-                <span style="margin-left: 14px; color: #1976e9; font-size: 12px; text-decoration: underline; cursor: pointer;">(Ganti file)</span>
+                <span style="margin-left: 14px; color: #1976e9; font-size: 12px; text-decoration: underline;">(Ganti file)</span>
             </div>
-        </div>
+        </label>
 
         <button class="btn btn-primary" type="submit" id="submit-btn" style="width: 100%; justify-content: center; min-height: 46px; font-size: 14px; font-weight: 700; border-radius: 9px; margin-top: 6px;">
             Unggah &amp; Perbarui Dashboard
@@ -122,10 +122,6 @@ const uploadForm = document.getElementById('upload-form');
 const submitBtn = document.getElementById('submit-btn');
 
 if (dropzone && fileInput) {
-    dropzone.addEventListener('click', (e) => {
-        fileInput.click();
-    });
-
     // Cegah browser membuka file secara default saat diseret
     window.addEventListener('dragover', (e) => e.preventDefault(), false);
     window.addEventListener('drop', (e) => e.preventDefault(), false);
