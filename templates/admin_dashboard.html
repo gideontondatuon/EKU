@@ -1,0 +1,36 @@
+{% extends 'base_admin.html' %}
+{% block content %}
+<section class="admin-hero">
+    <div>
+        <div class="eyebrow">MONITORING CASHFLOW INTERNAL</div>
+        <h1>Dashboard Cashflow EKU</h1>
+        <p>Monitoring arus uang kartal (Inflow - Outflow) Unit PUR KPwBI Provinsi Sulawesi Utara.</p>
+    </div>
+    <div class="hero-detail">
+        <small>STATUS PUBLIKASI</small>
+        <strong>{% if settings.publication_mode == 'AUTOMATIC' %}🟢 SINKRON OTOMATIS{% else %}{{ settings.publication_mode }}{% endif %}</strong>
+        <small>Data publik otomatis tersinkron</small>
+    </div>
+    {% if request.user.is_superuser or 'import_data' in permissions %}
+    <a class="btn" href="/admin/imports/">↑ Upload File Excel</a>
+    {% endif %}
+</section>
+
+{% if pending_count %}
+<div class="notice warning">
+    <strong>{{ pending_count }} baris memerlukan perhatian khusus.</strong> 
+    {% if request.user.is_superuser or 'verify_ambiguous' in permissions %}
+    <a href="/admin/review/">Buka review →</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% include 'partials/filters.html' %}
+{% include 'partials/kpis.html' %}
+{% for note in analytics.notes %}
+<div class="notice">{{ note }}</div>
+{% endfor %}
+{% include 'partials/charts.html' %}
+{% include 'partials/region_table.html' %}
+{% endblock %}
+

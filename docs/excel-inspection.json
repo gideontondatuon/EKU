@@ -1,0 +1,1804 @@
+{
+  "source": "references/SETBAY_DUMMY.xlsx",
+  "classification": "DATA DUMMY; internal inspection; account values redacted",
+  "inspection_method": "Python standard-library ZIP/XML, read-only, no formula execution",
+  "bytes": 29939,
+  "sha256": "cdf1d28975f46f3df1cd6ad5a04e3ddd0e16da547762bf753ffb171c8fee2954",
+  "sheets": [
+    {
+      "name": "Tanggal Update",
+      "nonempty_rows": 2,
+      "max_nonempty_row": 2,
+      "formula_cell_count": 0,
+      "formula_without_cached_value_count": 0,
+      "rows": [
+        {
+          "source_row": 1,
+          "cells": [
+            {
+              "coordinate": "A1",
+              "type": "s",
+              "style_index": 1,
+              "value": "Tanggal Update",
+              "number_format_id": 0
+            }
+          ]
+        },
+        {
+          "source_row": 2,
+          "cells": [
+            {
+              "coordinate": "A2",
+              "type": "n",
+              "style_index": 3,
+              "value": "46107.0",
+              "number_format_id": 14,
+              "decoded_excel_date": "2026-03-26T00:00:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DENOM",
+      "nonempty_rows": 5,
+      "max_nonempty_row": 5,
+      "formula_cell_count": 0,
+      "formula_without_cached_value_count": 0,
+      "rows": [
+        {
+          "source_row": 1,
+          "cells": [
+            {
+              "coordinate": "A1",
+              "type": "s",
+              "style_index": 2,
+              "value": "Pecahan",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "B1",
+              "type": "s",
+              "style_index": 4,
+              "value": "Denom",
+              "number_format_id": 49
+            },
+            {
+              "coordinate": "C1",
+              "type": "s",
+              "style_index": 1,
+              "value": "Urutan Denom",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E1",
+              "type": "s",
+              "style_index": 1,
+              "value": "Kode Kastip",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "F1",
+              "type": "s",
+              "style_index": 1,
+              "value": "Nama Kastip",
+              "number_format_id": 0
+            }
+          ]
+        },
+        {
+          "source_row": 2,
+          "cells": [
+            {
+              "coordinate": "A2",
+              "type": "s",
+              "style_index": 2,
+              "value": "KY22",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "B2",
+              "type": "s",
+              "style_index": 4,
+              "value": "  100.000 ",
+              "number_format_id": 49
+            },
+            {
+              "coordinate": "C2",
+              "type": "n",
+              "style_index": 1,
+              "value": "1.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E2",
+              "type": "s",
+              "style_index": 6,
+              "value": "000000",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "F2",
+              "type": "s",
+              "style_index": 1,
+              "value": "SKM Tahuna",
+              "number_format_id": 0
+            }
+          ]
+        },
+        {
+          "source_row": 3,
+          "cells": [
+            {
+              "coordinate": "A3",
+              "type": "s",
+              "style_index": 2,
+              "value": "KY16",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "B3",
+              "type": "s",
+              "style_index": 4,
+              "value": "  100.000 ",
+              "number_format_id": 49
+            },
+            {
+              "coordinate": "C3",
+              "type": "n",
+              "style_index": 1,
+              "value": "1.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E3",
+              "type": "s",
+              "style_index": 8,
+              "value": "000001",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "F3",
+              "type": "s",
+              "style_index": 1,
+              "value": "SKM Siau",
+              "number_format_id": 0
+            }
+          ]
+        },
+        {
+          "source_row": 4,
+          "cells": [
+            {
+              "coordinate": "A4",
+              "type": "s",
+              "style_index": 2,
+              "value": "KY14",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "B4",
+              "type": "s",
+              "style_index": 4,
+              "value": "  100.000 ",
+              "number_format_id": 49
+            },
+            {
+              "coordinate": "C4",
+              "type": "n",
+              "style_index": 1,
+              "value": "1.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E4",
+              "type": "s",
+              "style_index": 8,
+              "value": "000002",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "F4",
+              "type": "s",
+              "style_index": 1,
+              "value": "SKM Kotamobagu",
+              "number_format_id": 0
+            }
+          ]
+        },
+        {
+          "source_row": 5,
+          "cells": [
+            {
+              "coordinate": "A5",
+              "type": "s",
+              "style_index": 2,
+              "value": "KY04",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "B5",
+              "type": "s",
+              "style_index": 4,
+              "value": "  100.000 ",
+              "number_format_id": 49
+            },
+            {
+              "coordinate": "C5",
+              "type": "n",
+              "style_index": 1,
+              "value": "1.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E5",
+              "type": "s",
+              "style_index": 8,
+              "value": "000003",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "F5",
+              "type": "s",
+              "style_index": 1,
+              "value": "SKM Melonguane",
+              "number_format_id": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SETBAY KASTIP",
+      "nonempty_rows": 5,
+      "max_nonempty_row": 5,
+      "formula_cell_count": 16,
+      "formula_without_cached_value_count": 0,
+      "rows": [
+        {
+          "source_row": 1,
+          "cells": [
+            {
+              "coordinate": "A1",
+              "type": "s",
+              "style_index": 5,
+              "value": "COTC_TRAN_DATE",
+              "number_format_id": 14
+            },
+            {
+              "coordinate": "B1",
+              "type": "s",
+              "style_index": 7,
+              "value": "TRANSACTION_TYPE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "C1",
+              "type": "s",
+              "style_index": 7,
+              "value": "MONEY_TYPE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "D1",
+              "type": "s",
+              "style_index": 7,
+              "value": "BANK_NAME",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E1",
+              "type": "s",
+              "style_index": 7,
+              "value": "BANK_ACCOUNT",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "F1",
+              "type": "s",
+              "style_index": 7,
+              "value": "COTC_BRN_CODE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "G1",
+              "type": "s",
+              "style_index": 7,
+              "value": "MBRN_NAME",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "H1",
+              "type": "s",
+              "style_index": 7,
+              "value": "COTC_CLIENT_BRNCODE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "I1",
+              "type": "s",
+              "style_index": 7,
+              "value": "COTCR_NOTE_COIN_TYPE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "J1",
+              "type": "s",
+              "style_index": 11,
+              "value": "COTCR_AMOUNT",
+              "number_format_id": 164
+            },
+            {
+              "coordinate": "K1",
+              "type": "s",
+              "style_index": 11,
+              "value": "COTCR_PIECES",
+              "number_format_id": 164
+            },
+            {
+              "coordinate": "L1",
+              "type": "s",
+              "style_index": 7,
+              "value": "Denom",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "M1",
+              "type": "s",
+              "style_index": 13,
+              "value": "Urutan Denom",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "N1",
+              "type": "s",
+              "style_index": 13,
+              "value": "Nama Kastip",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "O1",
+              "type": "s",
+              "style_index": 13,
+              "value": "Inflow Kastip",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "P1",
+              "type": "s",
+              "style_index": 13,
+              "value": "Outflow Kasti",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "Q1",
+              "type": "s",
+              "style_index": 13,
+              "value": "Netflow Kastip",
+              "number_format_id": 0
+            }
+          ]
+        },
+        {
+          "source_row": 2,
+          "cells": [
+            {
+              "coordinate": "A2",
+              "type": "n",
+              "style_index": 16,
+              "value": "44454.0",
+              "number_format_id": 14,
+              "decoded_excel_date": "2021-09-15T00:00:00"
+            },
+            {
+              "coordinate": "B2",
+              "type": "s",
+              "style_index": 17,
+              "value": "Deposit",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "C2",
+              "type": "s",
+              "style_index": 19,
+              "value": "E-SB UTLE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "D2",
+              "type": "s",
+              "style_index": 17,
+              "value": "PT. BANK MANDIRI (PERSERO), TBK.",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E2",
+              "type": "s",
+              "style_index": 20,
+              "value": "[REDACTED]",
+              "number_format_id": 0,
+              "string_length": 11,
+              "has_leading_zero": true
+            },
+            {
+              "coordinate": "F2",
+              "type": "n",
+              "style_index": 17,
+              "value": "760.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "G2",
+              "type": "s",
+              "style_index": 17,
+              "value": "KPwBI Provinsi Sulawesi Utara",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "H2",
+              "type": "s",
+              "style_index": 20,
+              "value": "000000",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "I2",
+              "type": "s",
+              "style_index": 17,
+              "value": "KY14",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "J2",
+              "type": "n",
+              "style_index": 21,
+              "value": "1.0E8",
+              "number_format_id": 164
+            },
+            {
+              "coordinate": "K2",
+              "type": "n",
+              "style_index": 21,
+              "value": "1000.0",
+              "number_format_id": 164
+            },
+            {
+              "coordinate": "L2",
+              "type": "str",
+              "style_index": 24,
+              "value": "  100.000 ",
+              "number_format_id": 49,
+              "formula": {
+                "text": "VLOOKUP('SETBAY KASTIP'!$I2,DENOM!$A$2:$B$5,2,FALSE)",
+                "attributes": {},
+                "cached_value": "  100.000 "
+              }
+            },
+            {
+              "coordinate": "M2",
+              "type": "n",
+              "style_index": 17,
+              "value": "1",
+              "number_format_id": 0,
+              "formula": {
+                "text": "VLOOKUP(L2,DENOM!$B$2:$C$5,2,FALSE)",
+                "attributes": {},
+                "cached_value": "1"
+              }
+            },
+            {
+              "coordinate": "N2",
+              "type": "s",
+              "style_index": 20,
+              "value": "000000",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "O2",
+              "type": "n",
+              "style_index": 21,
+              "value": "100000000",
+              "number_format_id": 164,
+              "formula": {
+                "text": "IF(B2=\"Deposit\",J2,0)",
+                "attributes": {
+                  "t": "shared",
+                  "ref": "O2:O5",
+                  "si": "1"
+                },
+                "cached_value": "100000000"
+              }
+            },
+            {
+              "coordinate": "P2",
+              "type": "n",
+              "style_index": 17,
+              "value": "0",
+              "number_format_id": 0,
+              "formula": {
+                "text": "IF(B2=\"Withdrawal\",J2*-1,0)",
+                "attributes": {
+                  "t": "shared",
+                  "ref": "P2:P5",
+                  "si": "2"
+                },
+                "cached_value": "0"
+              }
+            },
+            {
+              "coordinate": "Q2",
+              "type": "n",
+              "style_index": 21,
+              "value": "100000000",
+              "number_format_id": 164,
+              "formula": {
+                "text": "O2+P2",
+                "attributes": {
+                  "t": "shared",
+                  "ref": "Q2:Q5",
+                  "si": "3"
+                },
+                "cached_value": "100000000"
+              }
+            }
+          ]
+        },
+        {
+          "source_row": 3,
+          "cells": [
+            {
+              "coordinate": "A3",
+              "type": "n",
+              "style_index": 25,
+              "value": "44454.0",
+              "number_format_id": 14,
+              "decoded_excel_date": "2021-09-15T00:00:00"
+            },
+            {
+              "coordinate": "B3",
+              "type": "s",
+              "style_index": 26,
+              "value": "Deposit",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "C3",
+              "type": "s",
+              "style_index": 26,
+              "value": "E-SB UTLE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "D3",
+              "type": "s",
+              "style_index": 26,
+              "value": "PT. BANK MANDIRI (PERSERO), TBK.",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E3",
+              "type": "s",
+              "style_index": 19,
+              "value": "[REDACTED]",
+              "number_format_id": 0,
+              "string_length": 11,
+              "has_leading_zero": true
+            },
+            {
+              "coordinate": "F3",
+              "type": "n",
+              "style_index": 26,
+              "value": "760.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "G3",
+              "type": "s",
+              "style_index": 26,
+              "value": "KPwBI Provinsi Sulawesi Utara",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "H3",
+              "type": "s",
+              "style_index": 19,
+              "value": "000001",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "I3",
+              "type": "s",
+              "style_index": 26,
+              "value": "KY16",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "J3",
+              "type": "n",
+              "style_index": 27,
+              "value": "1.0E8",
+              "number_format_id": 164
+            },
+            {
+              "coordinate": "K3",
+              "type": "n",
+              "style_index": 27,
+              "value": "1000.0",
+              "number_format_id": 164
+            },
+            {
+              "coordinate": "L3",
+              "type": "str",
+              "style_index": 30,
+              "value": "  100.000 ",
+              "number_format_id": 49,
+              "formula": {
+                "text": "VLOOKUP('SETBAY KASTIP'!$I3,DENOM!$A$2:$B$5,2,FALSE)",
+                "attributes": {},
+                "cached_value": "  100.000 "
+              }
+            },
+            {
+              "coordinate": "M3",
+              "type": "n",
+              "style_index": 26,
+              "value": "1",
+              "number_format_id": 0,
+              "formula": {
+                "text": "VLOOKUP(L3,DENOM!$B$2:$C$5,2,FALSE)",
+                "attributes": {},
+                "cached_value": "1"
+              }
+            },
+            {
+              "coordinate": "N3",
+              "type": "s",
+              "style_index": 19,
+              "value": "000001",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "O3",
+              "type": "n",
+              "style_index": 27,
+              "value": "100000000",
+              "number_format_id": 164,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "1"
+                },
+                "cached_value": "100000000"
+              }
+            },
+            {
+              "coordinate": "P3",
+              "type": "n",
+              "style_index": 26,
+              "value": "0",
+              "number_format_id": 0,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "2"
+                },
+                "cached_value": "0"
+              }
+            },
+            {
+              "coordinate": "Q3",
+              "type": "n",
+              "style_index": 27,
+              "value": "100000000",
+              "number_format_id": 164,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "3"
+                },
+                "cached_value": "100000000"
+              }
+            }
+          ]
+        },
+        {
+          "source_row": 4,
+          "cells": [
+            {
+              "coordinate": "A4",
+              "type": "n",
+              "style_index": 16,
+              "value": "44454.0",
+              "number_format_id": 14,
+              "decoded_excel_date": "2021-09-15T00:00:00"
+            },
+            {
+              "coordinate": "B4",
+              "type": "s",
+              "style_index": 17,
+              "value": "Deposit",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "C4",
+              "type": "s",
+              "style_index": 17,
+              "value": "E-SB UTLE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "D4",
+              "type": "s",
+              "style_index": 17,
+              "value": "PT. BANK MANDIRI (PERSERO), TBK.",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E4",
+              "type": "s",
+              "style_index": 19,
+              "value": "[REDACTED]",
+              "number_format_id": 0,
+              "string_length": 11,
+              "has_leading_zero": true
+            },
+            {
+              "coordinate": "F4",
+              "type": "n",
+              "style_index": 17,
+              "value": "760.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "G4",
+              "type": "s",
+              "style_index": 17,
+              "value": "KPwBI Provinsi Sulawesi Utara",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "H4",
+              "type": "s",
+              "style_index": 19,
+              "value": "000002",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "I4",
+              "type": "s",
+              "style_index": 17,
+              "value": "KX16",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "J4",
+              "type": "n",
+              "style_index": 21,
+              "value": "5.0E7",
+              "number_format_id": 164
+            },
+            {
+              "coordinate": "K4",
+              "type": "n",
+              "style_index": 21,
+              "value": "1000.0",
+              "number_format_id": 164
+            },
+            {
+              "coordinate": "L4",
+              "type": "s",
+              "style_index": 31,
+              "value": "100.000",
+              "number_format_id": 49
+            },
+            {
+              "coordinate": "M4",
+              "type": "n",
+              "style_index": 19,
+              "value": "2.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "N4",
+              "type": "s",
+              "style_index": 19,
+              "value": "000002",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "O4",
+              "type": "n",
+              "style_index": 21,
+              "value": "50000000",
+              "number_format_id": 164,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "1"
+                },
+                "cached_value": "50000000"
+              }
+            },
+            {
+              "coordinate": "P4",
+              "type": "n",
+              "style_index": 17,
+              "value": "0",
+              "number_format_id": 0,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "2"
+                },
+                "cached_value": "0"
+              }
+            },
+            {
+              "coordinate": "Q4",
+              "type": "n",
+              "style_index": 21,
+              "value": "50000000",
+              "number_format_id": 164,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "3"
+                },
+                "cached_value": "50000000"
+              }
+            }
+          ]
+        },
+        {
+          "source_row": 5,
+          "cells": [
+            {
+              "coordinate": "A5",
+              "type": "n",
+              "style_index": 25,
+              "value": "44454.0",
+              "number_format_id": 14,
+              "decoded_excel_date": "2021-09-15T00:00:00"
+            },
+            {
+              "coordinate": "B5",
+              "type": "s",
+              "style_index": 26,
+              "value": "Deposit",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "C5",
+              "type": "s",
+              "style_index": 26,
+              "value": "E-SB UTLE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "D5",
+              "type": "s",
+              "style_index": 26,
+              "value": "PT. BANK MANDIRI (PERSERO), TBK.",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E5",
+              "type": "s",
+              "style_index": 19,
+              "value": "[REDACTED]",
+              "number_format_id": 0,
+              "string_length": 11,
+              "has_leading_zero": true
+            },
+            {
+              "coordinate": "F5",
+              "type": "n",
+              "style_index": 26,
+              "value": "760.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "G5",
+              "type": "s",
+              "style_index": 26,
+              "value": "KPwBI Provinsi Sulawesi Utara",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "H5",
+              "type": "s",
+              "style_index": 19,
+              "value": "000003",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "I5",
+              "type": "s",
+              "style_index": 26,
+              "value": "KT16",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "J5",
+              "type": "n",
+              "style_index": 27,
+              "value": "4000000.0",
+              "number_format_id": 164
+            },
+            {
+              "coordinate": "K5",
+              "type": "n",
+              "style_index": 27,
+              "value": "2000.0",
+              "number_format_id": 164
+            },
+            {
+              "coordinate": "L5",
+              "type": "s",
+              "style_index": 31,
+              "value": "100.000",
+              "number_format_id": 49
+            },
+            {
+              "coordinate": "M5",
+              "type": "n",
+              "style_index": 34,
+              "value": "2.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "N5",
+              "type": "s",
+              "style_index": 19,
+              "value": "000003",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "O5",
+              "type": "n",
+              "style_index": 27,
+              "value": "4000000",
+              "number_format_id": 164,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "1"
+                },
+                "cached_value": "4000000"
+              }
+            },
+            {
+              "coordinate": "P5",
+              "type": "n",
+              "style_index": 26,
+              "value": "0",
+              "number_format_id": 0,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "2"
+                },
+                "cached_value": "0"
+              }
+            },
+            {
+              "coordinate": "Q5",
+              "type": "n",
+              "style_index": 27,
+              "value": "4000000",
+              "number_format_id": 164,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "3"
+                },
+                "cached_value": "4000000"
+              }
+            }
+          ]
+        }
+      ],
+      "account_summary": {
+        "distinct_values": 4,
+        "string_typed_all": true,
+        "leading_zero_count": 4
+      }
+    },
+    {
+      "name": "SETBAY MANADO",
+      "nonempty_rows": 5,
+      "max_nonempty_row": 5,
+      "formula_cell_count": 20,
+      "formula_without_cached_value_count": 0,
+      "rows": [
+        {
+          "source_row": 1,
+          "cells": [
+            {
+              "coordinate": "A1",
+              "type": "s",
+              "style_index": 9,
+              "value": "COTC_TRAN_DATE",
+              "number_format_id": 14
+            },
+            {
+              "coordinate": "B1",
+              "type": "s",
+              "style_index": 10,
+              "value": "COTC_BRN_CODE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "C1",
+              "type": "s",
+              "style_index": 10,
+              "value": "MBRN_NAME",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "D1",
+              "type": "s",
+              "style_index": 10,
+              "value": "TRANSACTION_TYPE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E1",
+              "type": "s",
+              "style_index": 10,
+              "value": "MONEY_TYPE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "F1",
+              "type": "s",
+              "style_index": 10,
+              "value": "BANK_NAME",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "G1",
+              "type": "s",
+              "style_index": 12,
+              "value": "BANK_ACCOUNT",
+              "number_format_id": 49
+            },
+            {
+              "coordinate": "H1",
+              "type": "s",
+              "style_index": 10,
+              "value": "COTC_BRN_CODE2",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "I1",
+              "type": "s",
+              "style_index": 10,
+              "value": "COTCP_NOTE_COIN_TYPE",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "J1",
+              "type": "s",
+              "style_index": 14,
+              "value": "COTCP_AMOUNT",
+              "number_format_id": 3
+            },
+            {
+              "coordinate": "K1",
+              "type": "s",
+              "style_index": 15,
+              "value": "COTCP_PIECES",
+              "number_format_id": 164
+            },
+            {
+              "coordinate": "L1",
+              "type": "s",
+              "style_index": 10,
+              "value": "Denom",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "M1",
+              "type": "s",
+              "style_index": 18,
+              "value": "Urutan Denom",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "N1",
+              "type": "s",
+              "style_index": 18,
+              "value": "Inflow",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "O1",
+              "type": "s",
+              "style_index": 18,
+              "value": "Outflow",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "P1",
+              "type": "s",
+              "style_index": 18,
+              "value": "Neflow",
+              "number_format_id": 0
+            }
+          ]
+        },
+        {
+          "source_row": 2,
+          "cells": [
+            {
+              "coordinate": "A2",
+              "type": "n",
+              "style_index": 16,
+              "value": "44449.0",
+              "number_format_id": 14,
+              "decoded_excel_date": "2021-09-10T00:00:00"
+            },
+            {
+              "coordinate": "B2",
+              "type": "n",
+              "style_index": 17,
+              "value": "760.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "C2",
+              "type": "s",
+              "style_index": 17,
+              "value": "KPwBI Provinsi Sulawesi Utara",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "D2",
+              "type": "s",
+              "style_index": 17,
+              "value": "Deposit",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E2",
+              "type": "s",
+              "style_index": 22,
+              "value": "D-SB ULE",
+              "number_format_id": 11
+            },
+            {
+              "coordinate": "F2",
+              "type": "s",
+              "style_index": 17,
+              "value": "PT. BANK NATIONALNOBU",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "G2",
+              "type": "s",
+              "style_index": 23,
+              "value": "[REDACTED]",
+              "number_format_id": 49,
+              "string_length": 10,
+              "has_leading_zero": true
+            },
+            {
+              "coordinate": "H2",
+              "type": "n",
+              "style_index": 17,
+              "value": "760.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "I2",
+              "type": "s",
+              "style_index": 17,
+              "value": "KY16",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "J2",
+              "type": "n",
+              "style_index": 17,
+              "value": "2.0E9",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "K2",
+              "type": "n",
+              "style_index": 17,
+              "value": "20000.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "L2",
+              "type": "str",
+              "style_index": 24,
+              "value": "  100.000 ",
+              "number_format_id": 49,
+              "formula": {
+                "text": "VLOOKUP('SETBAY MANADO'!$I2,DENOM!$A$2:$B$5,2,FALSE)",
+                "attributes": {},
+                "cached_value": "  100.000 "
+              }
+            },
+            {
+              "coordinate": "M2",
+              "type": "n",
+              "style_index": 17,
+              "value": "1",
+              "number_format_id": 0,
+              "formula": {
+                "text": "VLOOKUP(L2,DENOM!$B$2:$C$5,2,FALSE)",
+                "attributes": {},
+                "cached_value": "1"
+              }
+            },
+            {
+              "coordinate": "N2",
+              "type": "n",
+              "style_index": 17,
+              "value": "2000000000",
+              "number_format_id": 0,
+              "formula": {
+                "text": "IF(D2=\"Deposit\",J2,0)",
+                "attributes": {
+                  "t": "shared",
+                  "ref": "N2:N5",
+                  "si": "1"
+                },
+                "cached_value": "2000000000"
+              }
+            },
+            {
+              "coordinate": "O2",
+              "type": "n",
+              "style_index": 17,
+              "value": "0",
+              "number_format_id": 0,
+              "formula": {
+                "text": "IF(D2=\"Withdrawal\",J2*-1,0)",
+                "attributes": {
+                  "t": "shared",
+                  "ref": "O2:O5",
+                  "si": "2"
+                },
+                "cached_value": "0"
+              }
+            },
+            {
+              "coordinate": "P2",
+              "type": "n",
+              "style_index": 17,
+              "value": "2000000000",
+              "number_format_id": 0,
+              "formula": {
+                "text": "N2+O2",
+                "attributes": {
+                  "t": "shared",
+                  "ref": "P2:P5",
+                  "si": "3"
+                },
+                "cached_value": "2000000000"
+              }
+            }
+          ]
+        },
+        {
+          "source_row": 3,
+          "cells": [
+            {
+              "coordinate": "A3",
+              "type": "n",
+              "style_index": 25,
+              "value": "44449.0",
+              "number_format_id": 14,
+              "decoded_excel_date": "2021-09-10T00:00:00"
+            },
+            {
+              "coordinate": "B3",
+              "type": "n",
+              "style_index": 26,
+              "value": "760.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "C3",
+              "type": "s",
+              "style_index": 26,
+              "value": "KPwBI Provinsi Sulawesi Utara",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "D3",
+              "type": "s",
+              "style_index": 26,
+              "value": "Deposit",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E3",
+              "type": "s",
+              "style_index": 28,
+              "value": "D-SB ULE",
+              "number_format_id": 11
+            },
+            {
+              "coordinate": "F3",
+              "type": "s",
+              "style_index": 26,
+              "value": "PT. BANK VICTORIA INTERNASIONAL",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "G3",
+              "type": "s",
+              "style_index": 29,
+              "value": "[REDACTED]",
+              "number_format_id": 49,
+              "string_length": 10,
+              "has_leading_zero": true
+            },
+            {
+              "coordinate": "H3",
+              "type": "n",
+              "style_index": 26,
+              "value": "760.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "I3",
+              "type": "s",
+              "style_index": 26,
+              "value": "KY16",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "J3",
+              "type": "n",
+              "style_index": 26,
+              "value": "1.0E9",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "K3",
+              "type": "n",
+              "style_index": 26,
+              "value": "10000.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "L3",
+              "type": "str",
+              "style_index": 30,
+              "value": "  100.000 ",
+              "number_format_id": 49,
+              "formula": {
+                "text": "VLOOKUP('SETBAY MANADO'!$I3,DENOM!$A$2:$B$5,2,FALSE)",
+                "attributes": {},
+                "cached_value": "  100.000 "
+              }
+            },
+            {
+              "coordinate": "M3",
+              "type": "n",
+              "style_index": 26,
+              "value": "1",
+              "number_format_id": 0,
+              "formula": {
+                "text": "VLOOKUP(L3,DENOM!$B$2:$C$5,2,FALSE)",
+                "attributes": {},
+                "cached_value": "1"
+              }
+            },
+            {
+              "coordinate": "N3",
+              "type": "n",
+              "style_index": 26,
+              "value": "1000000000",
+              "number_format_id": 0,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "1"
+                },
+                "cached_value": "1000000000"
+              }
+            },
+            {
+              "coordinate": "O3",
+              "type": "n",
+              "style_index": 26,
+              "value": "0",
+              "number_format_id": 0,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "2"
+                },
+                "cached_value": "0"
+              }
+            },
+            {
+              "coordinate": "P3",
+              "type": "n",
+              "style_index": 26,
+              "value": "1000000000",
+              "number_format_id": 0,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "3"
+                },
+                "cached_value": "1000000000"
+              }
+            }
+          ]
+        },
+        {
+          "source_row": 4,
+          "cells": [
+            {
+              "coordinate": "A4",
+              "type": "n",
+              "style_index": 16,
+              "value": "44449.0",
+              "number_format_id": 14,
+              "decoded_excel_date": "2021-09-10T00:00:00"
+            },
+            {
+              "coordinate": "B4",
+              "type": "n",
+              "style_index": 17,
+              "value": "760.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "C4",
+              "type": "s",
+              "style_index": 17,
+              "value": "KPwBI Provinsi Sulawesi Utara",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "D4",
+              "type": "s",
+              "style_index": 17,
+              "value": "Deposit",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E4",
+              "type": "s",
+              "style_index": 22,
+              "value": "D-SB ULE",
+              "number_format_id": 11
+            },
+            {
+              "coordinate": "F4",
+              "type": "s",
+              "style_index": 17,
+              "value": "PT. BANK NEGARA INDONESIA (PERSERO), TBK.",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "G4",
+              "type": "s",
+              "style_index": 29,
+              "value": "[REDACTED]",
+              "number_format_id": 49,
+              "string_length": 10,
+              "has_leading_zero": true
+            },
+            {
+              "coordinate": "H4",
+              "type": "n",
+              "style_index": 17,
+              "value": "760.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "I4",
+              "type": "s",
+              "style_index": 17,
+              "value": "KY16",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "J4",
+              "type": "n",
+              "style_index": 17,
+              "value": "1.0E9",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "K4",
+              "type": "n",
+              "style_index": 17,
+              "value": "10000.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "L4",
+              "type": "str",
+              "style_index": 24,
+              "value": "  100.000 ",
+              "number_format_id": 49,
+              "formula": {
+                "text": "VLOOKUP('SETBAY MANADO'!$I4,DENOM!$A$2:$B$5,2,FALSE)",
+                "attributes": {},
+                "cached_value": "  100.000 "
+              }
+            },
+            {
+              "coordinate": "M4",
+              "type": "n",
+              "style_index": 17,
+              "value": "1",
+              "number_format_id": 0,
+              "formula": {
+                "text": "VLOOKUP(L4,DENOM!$B$2:$C$5,2,FALSE)",
+                "attributes": {},
+                "cached_value": "1"
+              }
+            },
+            {
+              "coordinate": "N4",
+              "type": "n",
+              "style_index": 17,
+              "value": "1000000000",
+              "number_format_id": 0,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "1"
+                },
+                "cached_value": "1000000000"
+              }
+            },
+            {
+              "coordinate": "O4",
+              "type": "n",
+              "style_index": 17,
+              "value": "0",
+              "number_format_id": 0,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "2"
+                },
+                "cached_value": "0"
+              }
+            },
+            {
+              "coordinate": "P4",
+              "type": "n",
+              "style_index": 17,
+              "value": "1000000000",
+              "number_format_id": 0,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "3"
+                },
+                "cached_value": "1000000000"
+              }
+            }
+          ]
+        },
+        {
+          "source_row": 5,
+          "cells": [
+            {
+              "coordinate": "A5",
+              "type": "n",
+              "style_index": 25,
+              "value": "44449.0",
+              "number_format_id": 14,
+              "decoded_excel_date": "2021-09-10T00:00:00"
+            },
+            {
+              "coordinate": "B5",
+              "type": "n",
+              "style_index": 26,
+              "value": "760.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "C5",
+              "type": "s",
+              "style_index": 26,
+              "value": "KPwBI Provinsi Sulawesi Utara",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "D5",
+              "type": "s",
+              "style_index": 26,
+              "value": "Deposit",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "E5",
+              "type": "s",
+              "style_index": 28,
+              "value": "D-SB ULE",
+              "number_format_id": 11
+            },
+            {
+              "coordinate": "F5",
+              "type": "s",
+              "style_index": 26,
+              "value": "PT Bank KB Indonesia Tbk",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "G5",
+              "type": "s",
+              "style_index": 29,
+              "value": "[REDACTED]",
+              "number_format_id": 49,
+              "string_length": 10,
+              "has_leading_zero": true
+            },
+            {
+              "coordinate": "H5",
+              "type": "n",
+              "style_index": 26,
+              "value": "760.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "I5",
+              "type": "s",
+              "style_index": 26,
+              "value": "KY16",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "J5",
+              "type": "n",
+              "style_index": 26,
+              "value": "4.0E9",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "K5",
+              "type": "n",
+              "style_index": 26,
+              "value": "40000.0",
+              "number_format_id": 0
+            },
+            {
+              "coordinate": "L5",
+              "type": "str",
+              "style_index": 30,
+              "value": "  100.000 ",
+              "number_format_id": 49,
+              "formula": {
+                "text": "VLOOKUP('SETBAY MANADO'!$I5,DENOM!$A$2:$B$5,2,FALSE)",
+                "attributes": {},
+                "cached_value": "  100.000 "
+              }
+            },
+            {
+              "coordinate": "M5",
+              "type": "n",
+              "style_index": 26,
+              "value": "1",
+              "number_format_id": 0,
+              "formula": {
+                "text": "VLOOKUP(L5,DENOM!$B$2:$C$5,2,FALSE)",
+                "attributes": {},
+                "cached_value": "1"
+              }
+            },
+            {
+              "coordinate": "N5",
+              "type": "n",
+              "style_index": 26,
+              "value": "4000000000",
+              "number_format_id": 0,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "1"
+                },
+                "cached_value": "4000000000"
+              }
+            },
+            {
+              "coordinate": "O5",
+              "type": "n",
+              "style_index": 26,
+              "value": "0",
+              "number_format_id": 0,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "2"
+                },
+                "cached_value": "0"
+              }
+            },
+            {
+              "coordinate": "P5",
+              "type": "n",
+              "style_index": 26,
+              "value": "4000000000",
+              "number_format_id": 0,
+              "formula": {
+                "text": null,
+                "attributes": {
+                  "t": "shared",
+                  "si": "3"
+                },
+                "cached_value": "4000000000"
+              }
+            }
+          ]
+        }
+      ],
+      "account_summary": {
+        "distinct_values": 4,
+        "string_typed_all": true,
+        "leading_zero_count": 4
+      }
+    },
+    {
+      "name": "Sheet2",
+      "nonempty_rows": 0,
+      "max_nonempty_row": 0,
+      "formula_cell_count": 0,
+      "formula_without_cached_value_count": 0,
+      "rows": []
+    }
+  ],
+  "archive": {
+    "entries": 23,
+    "total_uncompressed_bytes": 200561,
+    "total_compressed_bytes": 26683,
+    "external_links_present": false,
+    "macro_payload_present": false
+  },
+  "interpretation": {
+    "transaction_rows": 8,
+    "earliest_transaction_date": "2021-09-10",
+    "latest_transaction_date": "2021-09-15",
+    "source_update_date": "2026-03-26",
+    "source_inflow_total": "8254000000",
+    "source_outflow_total": "0",
+    "arithmetically_consistent_rows": 6,
+    "rows_requiring_denom_review": [
+      {
+        "sheet": "SETBAY KASTIP",
+        "row": 4,
+        "reason": "Denom 100000 times 1000 pieces differs from amount 50000000; KX16 absent DENOM"
+      },
+      {
+        "sheet": "SETBAY KASTIP",
+        "row": 5,
+        "reason": "Denom 100000 times 2000 pieces differs from amount 4000000; KT16 absent DENOM"
+      }
+    ],
+    "note": "Arithmetic consistency does not constitute production approval; every row is dummy."
+  }
+}

@@ -1,0 +1,7 @@
+{% extends 'base_admin.html' %}{% block content %}
+<div class="page-intro"><div><h1>Kosongkan Data</h1><p>Mulai kembali dengan transaksi dan riwayat impor kosong.</p></div></div>
+<section class="card card-body"><h2>Data yang akan dihapus</h2><p>Seluruh transaksi, arsip transaksi, antrean verifikasi, riwayat impor, estimasi, dan publikasi dashboard. File Excel yang sama dapat diimpor kembali.</p>
+<p>Akun login, master bank/wilayah/pecahan, pengaturan, dan audit tetap tersedia. Cadangan data dan file sumber disimpan privat untuk pemulihan oleh pengelola.</p>
+<details><summary>Lihat jumlah data</summary><ul>{% for label, count in counts.items %}<li>{{ label }}: {{ count }}</li>{% endfor %}</ul></details>
+<form method="post">{% csrf_token %}<div class="field"><label for="confirmation">Ketik KOSONGKAN DATA untuk melanjutkan</label><input id="confirmation" name="confirmation" required autocomplete="off" pattern="KOSONGKAN DATA"></div><button class="btn" type="submit">Kosongkan semua data</button> <a class="btn btn-secondary" href="{% url 'imports' %}">Batal</a></form></section>
+{% endblock %}

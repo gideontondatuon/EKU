@@ -1,0 +1,13 @@
+Django>=5.2,<5.3
+psycopg[binary]>=3.2,<4
+openpyxl>=3.1.5,<4
+defusedxml>=0.7.1,<1
+reportlab>=4.4,<5
+whitenoise>=6.9,<7
+gunicorn>=23,<24
+python-dotenv>=1.1,<2
+pytest>=8.3,<9
+pytest-django>=4.11,<5
+ruff>=0.14,<0.15
+playwright>=1.55,<2
+PyYAML>=6.0,<7

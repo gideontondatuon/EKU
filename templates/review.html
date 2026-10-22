@@ -1,0 +1,10 @@
+{% extends 'base_admin.html' %}{% block content %}
+<div class="page-intro"><div><div class="eyebrow">PEMERIKSAAN IMPOR</div><h1>Verifikasi Data</h1><p>{{ page_obj.paginator.count }} baris perlu diperiksa. Pilih Periksa untuk memperbaiki data, atau hapus baris yang tidak ingin diimpor.</p></div><a class="btn btn-secondary" href="{% url 'imports' %}">Import Excel</a></div>
+<section class="card"><form method="post" data-confirm="Hapus baris terpilih dari antrean impor? Baris ini tidak akan menjadi transaksi.">{% csrf_token %}
+<div class="card-body"><button class="btn btn-secondary" type="submit">Hapus pilihan</button><span class="small muted"> Pilihan berlaku untuk halaman ini.</span></div>
+<div class="table-wrap"><table><thead><tr><th><input type="checkbox" data-select-all aria-label="Pilih semua baris pada halaman ini"></th><th>Sumber / Baris</th><th>Yang perlu diperiksa</th><th>Tindakan</th></tr></thead><tbody>
+{% for row in rows %}<tr><td>{% if row.batch.mode != 'REPLACE' %}<input type="checkbox" name="ids" value="{{ row.pk }}" aria-label="Pilih baris {{ row.source_row_number }}">{% endif %}</td><td class="row-title">{{ row.sheet_name }} · Baris {{ row.source_row_number }}<div class="small muted">{{ row.batch.original_filename }}</div></td><td>{% for issue in row.validation_errors %}<div>{% if issue.code == 'numeric_account' %}Periksa nomor rekening: Excel menyimpannya sebagai angka, sehingga nol di depan mungkin hilang.{% else %}{{ issue.message }}{% endif %}</div>{% empty %}Periksa kemungkinan transaksi yang sama sudah pernah diimpor.{% endfor %}</td><td><a class="btn btn-secondary btn-sm" href="{% url 'review_detail' row.pk %}">Periksa</a></td></tr>
+{% empty %}<tr><td colspan="4"><div class="empty-state"><h2>Tidak ada data yang perlu diperiksa</h2><p>Anda dapat melanjutkan dengan mengimpor Excel.</p></div></td></tr>{% endfor %}
+</tbody></table></div></form>{% include 'partials/pagination.html' %}</section>
+{% if request.user.is_superuser %}<p><a href="{% url 'reset_data' %}">Kosongkan semua data dan mulai dari awal</a></p>{% endif %}
+{% endblock %}

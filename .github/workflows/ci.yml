@@ -1,0 +1,68 @@
+name: Dashboard Cashflow EKU
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: eku_ci
+          POSTGRES_USER: eku_ci
+          POSTGRES_PASSWORD: ci-only-ephemeral-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U eku_ci -d eku_ci"
+          --health-interval 5s --health-timeout 3s --health-retries 20
+    env:
+      DJANGO_ENV: development
+      DJANGO_SECRET_KEY: ci-ephemeral-not-for-deployment-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,testserver
+      DATABASE_URL: postgresql://eku_ci:ci-only-ephemeral-password@127.0.0.1:5432/eku_ci
+      PRIVATE_ROOT: /tmp/eku-ci-private
+    steps:
+      - uses: actions/checkout@v4
+      - name: Temukan root proyek
+        shell: bash
+        run: |
+          if [ -f "manage.py" ]; then
+            echo "EKU_PROJECT_DIR=." >> "$GITHUB_ENV"
+          else
+            echo "EKU_PROJECT_DIR=Dashboard Cashflow EKU" >> "$GITHUB_ENV"
+          fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: "**/requirements.txt"
+      - name: Install dependency terkunci
+        working-directory: ${{ env.EKU_PROJECT_DIR }}
+        run: python -m pip install -r requirements.txt
+      - name: Lint dan format
+        working-directory: ${{ env.EKU_PROJECT_DIR }}
+        run: |
+          python -m ruff check .
+          python -m ruff format --check .
+      - name: Check dan migrasi
+        working-directory: ${{ env.EKU_PROJECT_DIR }}
+        run: |
+          python manage.py check
+          python manage.py makemigrations --check --dry-run
+          python manage.py migrate --noinput
+      - name: Automated tests
+        working-directory: ${{ env.EKU_PROJECT_DIR }}
+        run: python -m pytest -q -m "not e2e" --junitxml=artifacts/pytest.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pytest-report
+          path: "**/artifacts/pytest.xml"
+          if-no-files-found: ignore

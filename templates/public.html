@@ -1,0 +1,159 @@
+{% extends 'base_public.html' %}
+{% load eku_tags %}
+
+{% block content %}
+<div class="page-intro">
+  <div>
+    <div class="eyebrow">MONITORING CASHFLOW · KPwBI SULAWESI UTARA</div>
+    <h1>Monitoring Arus Uang Kartal</h1>
+    <p>Ringkasan arus kas uang kartal (inflow, outflow, dan netflow) wilayah layanan Provinsi Sulawesi Utara.</p>
+  </div>
+  <div>
+    {% if version %}
+      <span class="badge badge-success"><span class="status-dot"></span>Data dipublikasikan</span>
+      <p class="small muted" style="margin-top:6px">Versi: {{ version.published_at|date:'d M Y, H:i' }} WITA</p>
+    {% else %}
+      <span class="badge">Menunggu publikasi pertama</span>
+    {% endif %}
+  </div>
+</div>
+
+<nav class="tabs" aria-label="Halaman dashboard">
+  {% for tab in public_tabs %}
+    <a href="/?tab={{ tab.key }}" {% if active_tab == tab.key %}aria-current="page"{% endif %}>{{ tab.label }}</a>
+  {% empty %}
+    <a href="/?tab=summary" aria-current="page">Ringkasan</a>
+  {% endfor %}
+</nav>
+
+{% if active_tab == 'estimates' %}
+  <section class="card">
+    <div class="empty-state">
+      <div class="empty-icon" aria-hidden="true">⌁</div>
+      <h2>Estimasi belum tersedia</h2>
+      <p>Format sumber estimasi kebutuhan uang dan cakupan publikasinya menunggu penetapan resmi. Belum ada angka estimasi yang dipublikasikan.</p>
+      <span class="badge">Menunggu format resmi</span>
+    </div>
+  </section>
+{% else %}
+  {% if not version %}
+    <div class="notice" style="margin-bottom: 20px;">
+      Belum ada data yang dipublikasikan. Data internal tidak tampil otomatis di halaman publik ini sebelum diterbitkan oleh Admin.
+    </div>
+  {% endif %}
+
+  {# 1. KPI Cards Utama Ditampilkan di Atas #}
+  {% include 'partials/kpis.html' %}
+
+  {# 2. Filter Ringkas dan Dinamis di Bawah KPI #}
+  {% include 'partials/filters.html' %}
+
+  {# 3. Grafik dan Rincian Tab Aktif #}
+  {% if active_tab == 'denominations' %}
+    <section class="card">
+      <div class="card-header">
+        <div>
+          <h2>Komposisi pecahan uang</h2>
+          <p>Hanya rincian agregat yang diizinkan dalam versi publikasi.</p>
+        </div>
+      </div>
+      {% if analytics.denominations %}
+        <div class="chart-wrap">
+          <div id="denomination-chart" class="chart" role="img" aria-label="Grafik distribusi pecahan dengan tabel setara di bawah."></div>
+        </div>
+        {{ analytics.denominations|json_script:'denomination-series' }}
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Pecahan</th>
+                <th class="num">Inflow</th>
+                <th class="num">Outflow</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in analytics.denominations %}
+                <tr>
+                  <td>{{ row.denomination }}</td>
+                  <td class="num">{{ row.inflow|rupiah }}</td>
+                  <td class="num">{{ row.outflow|rupiah }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <div class="empty-icon">▥</div>
+          <h2>Rincian pecahan belum tersedia</h2>
+          <p>Publikasi default hanya memuat agregat wilayah. Rincian tambahan memerlukan cakupan yang telah disetujui.</p>
+        </div>
+      {% endif %}
+    </section>
+
+  {% elif active_tab == 'seasonality' %}
+    <section class="card">
+      <div class="card-header">
+        <div>
+          <h2>Pola musiman historis</h2>
+          <p>Analisis deskriptif berdasarkan observasi yang tersedia; bukan prediksi.</p>
+        </div>
+      </div>
+      {% if analytics.seasonality %}
+        <div class="chart-wrap">
+          <div id="seasonality-chart" class="chart" role="img" aria-label="Pola musiman historis. Tabel data terdapat di bawah."></div>
+        </div>
+        {{ analytics.seasonality|json_script:'seasonality-series' }}
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Bulan</th>
+                <th class="num">Rata-rata inflow</th>
+                <th class="num">Rata-rata outflow</th>
+                <th class="num">Observasi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in analytics.seasonality %}
+                <tr>
+                  <td>{{ row.month }}</td>
+                  <td class="num">{{ row.inflow|rupiah }}</td>
+                  <td class="num">{{ row.outflow|rupiah }}</td>
+                  <td class="num">{{ row.observations }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <div class="empty-icon">⌁</div>
+          <h2>Observasi historis belum memadai</h2>
+          <p>Pola musiman memerlukan cakupan data yang cukup. Tidak ada prediksi atau nilai pengganti yang dihitung.</p>
+        </div>
+      {% endif %}
+    </section>
+
+  {% else %}
+    {% include 'partials/charts.html' %}
+
+    {% if active_tab == 'trend' %}
+      <section class="card card-body">
+        <h2>Perbandingan periode sepadan</h2>
+        <div class="stats-strip">
+          <div>
+            <strong>{{ analytics.mom|default_if_none:'N/A'|default:'N/A' }}</strong>
+            <span>MoM · dibanding periode bulan sebelumnya</span>
+          </div>
+          <div>
+            <strong>{{ analytics.yoy|default_if_none:'N/A'|default:'N/A' }}</strong>
+            <span>YoY · dibanding periode tahun sebelumnya</span>
+          </div>
+        </div>
+        <p class="small muted" style="margin-top:18px">N/A berarti baseline tidak tersedia atau bernilai nol. Data pada periode berjalan dapat belum lengkap.</p>
+      </section>
+    {% endif %}
+  {% endif %}
+{% endif %}
+{% endblock %}

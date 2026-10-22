@@ -1,0 +1,64 @@
+{% if filter_form %}
+<section class="card filter-card filter-compact" aria-label="Filter dashboard">
+  <form method="get" class="filter-flex" data-period-filter>
+    {% if active_tab %}<input type="hidden" name="tab" value="{{ active_tab }}">{% endif %}
+    {% if filter_form.date %}{{ filter_form.date }}{% endif %}
+
+    <div class="filter-field">
+      <label for="{{ filter_form.period.id_for_label }}">Periode</label>
+      {{ filter_form.period }}
+    </div>
+
+    <div class="filter-field" data-period="daily">
+      <label for="{{ filter_form.day.id_for_label }}">Tanggal</label>
+      {{ filter_form.day }}
+    </div>
+
+    <div class="filter-field" data-period="monthly">
+      <label for="{{ filter_form.month.id_for_label }}">Bulan</label>
+      {{ filter_form.month }}
+    </div>
+
+    <div class="filter-field" data-period="yearly">
+      <label for="{{ filter_form.year.id_for_label }}">Tahun</label>
+      {{ filter_form.year }}
+    </div>
+
+    <div class="filter-field" data-period="custom">
+      <label for="{{ filter_form.start.id_for_label }}">Mulai</label>
+      {{ filter_form.start }}
+    </div>
+
+    <div class="filter-field" data-period="custom">
+      <label for="{{ filter_form.end.id_for_label }}">Sampai</label>
+      {{ filter_form.end }}
+    </div>
+
+    {% if filter_form.region %}
+    <div class="filter-field">
+      <label for="{{ filter_form.region.id_for_label }}">Wilayah</label>
+      {{ filter_form.region }}
+    </div>
+    {% endif %}
+
+    {% if filter_form.bank %}
+    <div class="filter-field">
+      <label for="{{ filter_form.bank.id_for_label }}">Bank</label>
+      {{ filter_form.bank }}
+    </div>
+    {% endif %}
+
+    <div class="filter-actions">
+      <button class="btn btn-primary btn-sm" type="submit">Terapkan Filter</button>
+      <a class="btn btn-secondary btn-sm" href="{{ request.path }}{% if active_tab %}?tab={{ active_tab }}{% endif %}">Reset</a>
+    </div>
+  </form>
+  {% if filter_form.errors %}
+    <div class="notice error" style="margin-top: 10px; font-size: 12px;">
+      {% for field, errors in filter_form.errors.items %}
+        {{ errors|join:", " }}
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>
+{% endif %}

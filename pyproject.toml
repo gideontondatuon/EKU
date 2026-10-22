@@ -1,0 +1,12 @@
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py"]
+testpaths = ["tests"]
+addopts = "--strict-markers"
+markers = ["e2e: browser tests require a running local server"]
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = [".runtime", ".tools", ".cache", "static", "references"]
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
