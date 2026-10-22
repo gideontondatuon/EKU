@@ -12,7 +12,8 @@ __pycache__/
 .ruff_cache/
 .coverage
 htmlcov/
-staticfiles/
+staticfiles/*
+!staticfiles/.gitkeep
 artifacts/*.log
 artifacts/*.dump
 artifacts/*.sql

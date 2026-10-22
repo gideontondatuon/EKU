@@ -80,7 +80,15 @@ TEMPLATES = [
         },
     }
 ]
-db = urlparse(os.getenv("DATABASE_URL", "postgresql://eku@127.0.0.1:55432/eku"))
+raw_db_url = os.getenv("DATABASE_URL") or os.getenv("POSTGRES_URL")
+if not raw_db_url:
+    if os.getenv("VERCEL"):
+        raise ImproperlyConfigured(
+            "Variabel DATABASE_URL atau POSTGRES_URL belum diatur di Vercel Environment Variables."
+        )
+    raw_db_url = "postgresql://eku@127.0.0.1:55432/eku"
+
+db = urlparse(raw_db_url)
 if db.scheme not in {"postgres", "postgresql"}:
     raise ImproperlyConfigured("Aplikasi dan tes memerlukan PostgreSQL.")
 DATABASES = {
