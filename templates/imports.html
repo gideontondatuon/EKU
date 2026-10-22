@@ -26,26 +26,38 @@
         <input type="hidden" name="mode" value="ADD">
         <input type="hidden" name="is_demo" value="">
 
-        <div class="file-upload-dropzone" id="dropzone" style="background: #f8fbfe; border: 2px dashed #1976e9; border-radius: 12px; padding: 28px 20px; text-align: center; margin-bottom: 14px;">
-            <div class="upload-icon" style="margin-bottom: 10px;">
-                <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#1054ab" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <label for="id_file" class="file-upload-dropzone" id="dropzone" style="display: block; cursor: pointer; background: #f8fbfe; border: 2.5px dashed #1976e9; border-radius: 14px; padding: 34px 20px; text-align: center; margin-bottom: 16px; user-select: none;">
+            <div class="upload-icon" style="margin-bottom: 12px;">
+                <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#1976e9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="17 8 12 3 7 8"></polyline>
                     <line x1="12" y1="3" x2="12" y2="15"></line>
                 </svg>
             </div>
-            <strong style="font-size: 16px; color: #1054ab; display: block; margin-bottom: 12px;">
-                Pilih atau Tarik File Excel (.xlsx) ke Sini
-            </strong>
-            <input id="id_file" type="file" name="file" accept=".xlsx" required style="font-size: 14px; padding: 10px 14px; border: 1.5px solid #90caf9; border-radius: 8px; background: #ffffff; cursor: pointer; max-width: 440px; width: 100%; display: inline-block;">
-            <div class="muted small" style="margin-top: 10px;">Format yang didukung: <strong>.xlsx</strong> (File SETBAY Manado &amp; Kas Titipan)</div>
-            <div id="file-chosen-box" style="display: none; margin-top: 14px; background: #e8f5e9; border: 1px solid #81c784; color: #2e7d32; padding: 8px 16px; border-radius: 8px; font-weight: 600;">
-                <span id="file-name-text"></span>
-                <span id="file-size-text" style="color: #388e3c; font-weight: 400; font-size: 12px; margin-left: 6px;"></span>
+            <div style="font-size: 17px; font-weight: 700; color: #1054ab; margin-bottom: 6px;">
+                Klik Di Sini untuk Memilih File Excel
             </div>
-        </div>
+            <div style="color: #64748b; font-size: 13px; margin-bottom: 16px;">
+                atau seret dan lepas file .xlsx ke dalam kotak ini
+            </div>
 
-        <button class="btn btn-primary" type="submit" id="submit-btn" style="width: 100%; justify-content: center; min-height: 46px; font-size: 14px; font-weight: 700; border-radius: 9px; margin-top: 6px;">
+            <div>
+                <span class="btn" style="background: #1976e9; color: #ffffff; font-weight: 700; font-size: 15px; padding: 11px 26px; border-radius: 8px; display: inline-block; pointer-events: none; box-shadow: 0 2px 6px rgba(25,118,233,0.25);">
+                    📂 Buka File Explorer (.xlsx)
+                </span>
+            </div>
+
+            <input id="id_file" type="file" name="file" accept=".xlsx" style="position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none;">
+
+            <div id="file-chosen-box" style="display: none; margin-top: 18px; background: #e8f5e9; border: 1.5px solid #4caf50; color: #1b5e20; padding: 12px 20px; border-radius: 9px; font-size: 14px; text-align: center;">
+                <span style="font-size: 18px; margin-right: 6px;">✅</span>
+                <strong id="file-name-text"></strong>
+                <span id="file-size-text" style="color: #2e7d32; font-size: 13px; margin-left: 8px;"></span>
+                <div style="font-size: 12px; color: #1976e9; margin-top: 4px; text-decoration: underline;">(Klik kotak ini jika ingin mengganti file)</div>
+            </div>
+        </label>
+
+        <button class="btn btn-primary" type="submit" id="submit-btn" style="width: 100%; justify-content: center; min-height: 48px; font-size: 15px; font-weight: 700; border-radius: 9px; margin-top: 6px;">
             Unggah &amp; Perbarui Dashboard
         </button>
     </form>
@@ -90,63 +102,78 @@
 </section>
 
 <script>
+const fileInput = document.getElementById('id_file');
+const dropzone = document.getElementById('dropzone');
+const uploadForm = document.getElementById('upload-form');
+const submitBtn = document.getElementById('submit-btn');
+
 function formatFileSize(bytes) {
     if (bytes < 1024) return bytes + ' B';
     else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
     else return (bytes / 1048576).toFixed(1) + ' MB';
 }
 
-function handleFileSelect(input) {
+function updateFileDisplay() {
     const box = document.getElementById('file-chosen-box');
     const nameText = document.getElementById('file-name-text');
     const sizeText = document.getElementById('file-size-text');
-    const submitBtn = document.getElementById('submit-btn');
-    if (input.files && input.files[0]) {
-        nameText.textContent = input.files[0].name;
-        sizeText.textContent = '(' + formatFileSize(input.files[0].size) + ')';
-        box.style.display = 'inline-flex';
-        submitBtn.textContent = '🚀 Unggah: ' + input.files[0].name;
+    if (fileInput.files && fileInput.files[0]) {
+        const f = fileInput.files[0];
+        nameText.textContent = f.name;
+        sizeText.textContent = '(' + formatFileSize(f.size) + ')';
+        box.style.display = 'block';
+        submitBtn.textContent = '🚀 Unggah: ' + f.name;
+        submitBtn.style.background = '#2e7d32';
     } else {
         box.style.display = 'none';
         submitBtn.textContent = 'Unggah & Perbarui Dashboard';
+        submitBtn.style.background = '';
     }
 }
 
-const fileInput = document.getElementById('id_file');
-const dropzone = document.getElementById('dropzone');
-const uploadForm = document.getElementById('upload-form');
-const submitBtn = document.getElementById('submit-btn');
+if (fileInput) {
+    fileInput.addEventListener('change', updateFileDisplay);
+}
+
+if (submitBtn && fileInput) {
+    submitBtn.addEventListener('click', (e) => {
+        if (!fileInput.files || fileInput.files.length === 0) {
+            e.preventDefault();
+            fileInput.click();
+        }
+    });
+}
 
 if (dropzone && fileInput) {
-    // Cegah browser membuka file secara default saat diseret
     window.addEventListener('dragover', (e) => e.preventDefault(), false);
     window.addEventListener('drop', (e) => e.preventDefault(), false);
 
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropzone.addEventListener(eventName, (e) => {
+    ['dragenter', 'dragover'].forEach(name => {
+        dropzone.addEventListener(name, (e) => {
             e.preventDefault();
             e.stopPropagation();
-            dropzone.classList.add('dragover');
-        }, false);
+            dropzone.style.borderColor = '#0d47a1';
+            dropzone.style.background = '#e3f2fd';
+        });
     });
 
-    ['dragleave'].forEach(eventName => {
-        dropzone.addEventListener(eventName, (e) => {
+    ['dragleave', 'drop'].forEach(name => {
+        dropzone.addEventListener(name, (e) => {
             e.preventDefault();
             e.stopPropagation();
-            dropzone.classList.remove('dragover');
-        }, false);
+            dropzone.style.borderColor = '#1976e9';
+            dropzone.style.background = '#f8fbfe';
+        });
     });
 
     dropzone.addEventListener('drop', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        dropzone.classList.remove('dragover');
         const dt = e.dataTransfer;
         if (dt && dt.files && dt.files.length > 0) {
             const file = dt.files[0];
             if (!file.name.toLowerCase().endsWith('.xlsx')) {
-                alert('Peringatan: Hanya file Excel berformat .xlsx yang dapat diunggah.');
+                alert('Peringatan: File harus berformat .xlsx');
                 return;
             }
             try {
@@ -156,20 +183,15 @@ if (dropzone && fileInput) {
             } catch (err) {
                 fileInput.files = dt.files;
             }
-            handleFileSelect(fileInput);
+            updateFileDisplay();
         }
     }, false);
-
-    fileInput.addEventListener('change', () => {
-        handleFileSelect(fileInput);
-    });
 }
 
 if (uploadForm) {
     uploadForm.addEventListener('submit', (e) => {
         if (!fileInput.files || fileInput.files.length === 0) {
             e.preventDefault();
-            alert('Silakan pilih file Excel (.xlsx) terlebih dahulu.');
             fileInput.click();
             return false;
         }
