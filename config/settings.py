@@ -15,8 +15,29 @@ if PRODUCTION and (
 ):
     raise ImproperlyConfigured("DJANGO_SECRET_KEY wajib diisi secret acak minimal 50 karakter.")
 DEBUG = not PRODUCTION and os.getenv("DJANGO_DEBUG", "1") == "1"
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,[::1],testserver").split(",")
-CSRF_TRUSTED_ORIGINS = list(filter(None, os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")))
+ALLOWED_HOSTS = [
+    h.strip()
+    for h in os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,[::1],testserver").split(",")
+    if h.strip()
+]
+CSRF_TRUSTED_ORIGINS = [
+    o.strip()
+    for o in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
+    if o.strip()
+]
+if os.getenv("VERCEL"):
+    for host in [".vercel.app", "localhost", "127.0.0.1", "[::1]"]:
+        if host not in ALLOWED_HOSTS:
+            ALLOWED_HOSTS.append(host)
+    vercel_url = os.getenv("VERCEL_URL")
+    if vercel_url and vercel_url not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(vercel_url)
+    if "https://*.vercel.app" not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append("https://*.vercel.app")
+    if vercel_url:
+        origin_url = f"https://{vercel_url}"
+        if origin_url not in CSRF_TRUSTED_ORIGINS:
+            CSRF_TRUSTED_ORIGINS.append(origin_url)
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -70,11 +91,13 @@ DATABASES = {
         "PASSWORD": unquote(db.password or ""),
         "HOST": db.hostname or "localhost",
         "PORT": db.port or 5432,
-        "CONN_MAX_AGE": 60 if PRODUCTION else 0,
-        "OPTIONS": {"sslmode": os.getenv("DATABASE_SSLMODE", "prefer")},
+        "CONN_MAX_AGE": 0 if os.getenv("VERCEL") else (60 if PRODUCTION else 0),
+        "OPTIONS": {
+            "sslmode": os.getenv("DATABASE_SSLMODE", "require" if os.getenv("VERCEL") else "prefer")
+        },
     }
 }
-if PRODUCTION and (not os.getenv("DJANGO_ALLOWED_HOSTS") or "*" in ALLOWED_HOSTS):
+if PRODUCTION and not os.getenv("VERCEL") and (not os.getenv("DJANGO_ALLOWED_HOSTS") or "*" in ALLOWED_HOSTS):
     raise ImproperlyConfigured(
         "Production memerlukan DJANGO_ALLOWED_HOSTS eksplisit tanpa wildcard."
     )
@@ -104,7 +127,10 @@ STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
 }
-PRIVATE_ROOT = Path(os.getenv("PRIVATE_ROOT", str(BASE_DIR / ".private")))
+if os.getenv("VERCEL"):
+    PRIVATE_ROOT = Path(os.getenv("PRIVATE_ROOT", "/tmp/.private"))
+else:
+    PRIVATE_ROOT = Path(os.getenv("PRIVATE_ROOT", str(BASE_DIR / ".private")))
 MEDIA_ROOT = PRIVATE_ROOT / "uploads"
 FILE_UPLOAD_PERMISSIONS = 0o600
 FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o700
@@ -127,7 +153,7 @@ SECURE_HSTS_PRELOAD = PRODUCTION
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "same-origin"
 X_FRAME_OPTIONS = "DENY"
-if os.getenv("TRUST_PROXY_SSL", "0") == "1":
+if os.getenv("TRUST_PROXY_SSL", "0") == "1" or os.getenv("VERCEL"):
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # A private DB-backed rate limiter works across Gunicorn workers; no process-local counter.
 LOGGING = {
