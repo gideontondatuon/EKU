@@ -16,5 +16,4 @@ RUN mkdir -p /app/.private/uploads /app/staticfiles \
 USER eku
 RUN DJANGO_ENV=development python manage.py collectstatic --noinput
 
-EXPOSE 8000
-CMD ["gunicorn", "config.wsgi:application", "--config", "deploy/gunicorn.conf.py"]
+CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn config.wsgi:application --config deploy/gunicorn.conf.py"]
